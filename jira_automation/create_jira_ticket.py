@@ -3,10 +3,12 @@
 import requests
 from requests.auth import HTTPBasicAuth
 import json
+import os
 
-url = "https://northeastern-team-n0lxizqj.atlassian.ne/rest/api/3/issue"
+url = "https://northeastern-team-n0lxizqj.atlassian.net/rest/api/3/issue"
 
-API_TOKEN = ""
+API_TOKEN=os.environ.get("API_TOKEN_JIRA")
+print("API token loaded:", bool(API_TOKEN))
 
 auth = HTTPBasicAuth("patel.bre@northeastern.edu", API_TOKEN)
 
@@ -33,10 +35,10 @@ payload = json.dumps( {
       "version": 1
     },
     "project": {
-      "key": "AB"
+      "key": "AA"
     },
     "issuetype": {
-      "id": "10006"
+      "id": "10009"
     },
     "summary": "First JIRA Ticket",
   },
@@ -51,4 +53,6 @@ response = requests.request(
    auth=auth
 )
 
+print("Status Code:", response.status_code)
+print("Response Text:", response.text)
 print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
